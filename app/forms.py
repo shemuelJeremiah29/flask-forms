@@ -1,18 +1,18 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import StringField
+from wtforms import StringField, TextAreaField, validators, RadioField, SubmitField 
 from wtforms.validators import DataRequired, Email
 
 
-class MyForm(FlaskForm):
+class MyProfileForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired()])
     lastname = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-
-
-class PhotoForm(FlaskForm):
+    location = StringField('Location', validators=[DataRequired()]) 
+    gender= RadioField('Gender', choices=[('Male', 'male'), ('Female','female')])
+    biography= TextAreaField('Biography', validators.length(max=500)) 
     photo = FileField('Photo', validators=[
         FileRequired(),
         FileAllowed(['jpg', 'png', 'Images only!'])
-    ])
-    description = StringField('Description', validators=[DataRequired()])
+    ])  
+    submit=SubmitField(label='Submit')

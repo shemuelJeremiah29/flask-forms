@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 
 # Note: that when using Flask-WTF we need to import the Form Class that we created
 # in forms.py
-from forms import MyForm, PhotoForm
+from forms import MyProfileForm
 
 
 ###
@@ -39,9 +39,9 @@ def basic_form():
     return render_template('form.html')
 
 
-@app.route('/wtform', methods=['GET', 'POST'])
-def wtform():
-    myform = MyForm()
+@app.route('/profile', methods=['GET', 'POST']) 
+def profileform():
+    myform = MyProfileForm()
 
     if request.method == 'POST':
         if myform.validate_on_submit():
@@ -50,7 +50,12 @@ def wtform():
             firstname = myform.firstname.data
             lastname = myform.lastname.data
             email = myform.email.data
-
+            location = myform.location.data 
+            gender= myform.gender.data 
+            biography= myform.biography.data 
+            profilephoto= myform.photo.data 
+            
+            
             flash('You have successfully filled out the form', 'success')
             return render_template('result.html', firstname=firstname, lastname=lastname, email=email)
 
@@ -58,24 +63,30 @@ def wtform():
     return render_template('wtform.html', form=myform)
 
 
-@app.route('/photo-upload', methods=['GET', 'POST'])
-def photo_upload():
-    photoform = PhotoForm()
+@app.route('/profile', methods=['GET', 'POST']) 
 
-    if request.method == 'POST' and photoform.validate_on_submit():
+@app.route('/profiles', methods=['GET, POST'])
+@app.route('/profiles/<userid>', methods=['GET', 'POST']) 
 
-        photo = photoform.photo.data # we could also use request.files['photo']
-        description = photoform.description.data
 
-        filename = secure_filename(photo.filename)
-        photo.save(os.path.join(
-            app.config['UPLOAD_FOLDER'], filename
-        ))
+# @app.route('/photo-upload', methods=['GET', 'POST'])
+# def photo_upload():
+#     # photoform = PhotoForm()
 
-        return render_template('display_photo.html', filename=filename, description=description)
+#     if request.method == 'POST' and photoform.validate_on_submit():
 
-    flash_errors(photoform)
-    return render_template('photo_upload.html', form=photoform)
+#         photo = photoform.photo.data # we could also use request.files['photo']
+#         description = photoform.description.data
+
+#         filename = secure_filename(photo.filename)
+#         photo.save(os.path.join(
+#             app.config['UPLOAD_FOLDER'], filename
+#         ))
+
+#         return render_template('display_photo.html', filename=filename, description=description)
+
+#     flash_errors(photoform)
+#     return render_template('photo_upload.html', form=photoform)
 
 ###
 # The functions below should be applicable to all Flask apps.
