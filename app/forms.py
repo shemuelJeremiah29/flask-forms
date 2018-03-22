@@ -10,7 +10,7 @@ class MyProfileForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     location = StringField('Location', validators=[DataRequired()]) 
     gender= RadioField('Gender', choices=[('Male', 'male'), ('Female','female')])
-    biography= TextAreaField('Biography', validators.length(max=500)) 
+    biography= TextAreaField('Biography', [validators.Length( min=50, max=500)]) 
     photo = FileField('Photo', validators=[
         FileRequired(),
         FileAllowed(['jpg', 'png', 'Images only!'])

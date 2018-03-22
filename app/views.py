@@ -49,13 +49,13 @@ def profileform():
             return redirect(url_for("/profiles"))
 
         flash_errors(myform)
-    return render_template('wtform.html', form=myform)
+    return render_template('profileform.html', form=myform)
 
 
 
-@app.route('/profiles', methods=['GET, POST']) 
+@app.route('/profiles', methods=['GET', 'POST']) 
 def display_profilelist(): 
-     user=User.query.all     
+     user=User.query.all()     
      return render_template("profiles.html",user=user) 
      
 

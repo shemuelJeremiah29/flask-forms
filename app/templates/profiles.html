@@ -12,11 +12,13 @@
              {{user.firstname}} {{user.lastname}} 
              {{user.gender}} 
              {{user.location}}  
-             <a href="url_for(individ_profile,userid=user.id)">View Profile</a> 
+             <a href="url_for('/profile/',user.id)">View Profile</a> 
         </div>
     {% endfor %}
              
-     </ul> 
+     </ul>  
+     
+     {% endblock %}
      
      
      

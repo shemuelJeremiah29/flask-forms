@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
 {% block main %} 
-{form.csrf_token}
-    <h1>Add Profile</h1>
+    {{form.csrf_token}}
    
-    <div class='form-layout'>    
-    <form method="post" action="{{ url_for('profile') }}">
+    <div class='form-layout'>     
+    <form method="post" action="{{ url_for('profileform') }}" enctype="multipart/form-data">
         {% include 'flash_messages.html' %}
-        {{ form.csrf_token }}
         <div class="form-group">
             {{ form.firstname.label }} {{ form.firstname(class="form-control") }}
         </div>
@@ -24,8 +22,10 @@
              {{ form.biography.label }} {{ form.biography.label(class="form-control") }}
         </div>   
         <div class="form-group"> 
-             {{ form.photo.label }} {{ form.photo.label(class="form-control") }}
-        </div>  
+             {{ form.photo.label }} {{ form.photo.label(class="form-control") }} 
+             <button class="btn btn-primary">Upload</button>
+        </div>   
+        
     <button type="submit" class="btn btn-primary">Submit</button>
     </form> 
     </div> 

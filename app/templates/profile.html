@@ -2,7 +2,7 @@
 
 {% block main %} 
 
-<div class= ind_profilelayout>
+<div class= "ind_profilelayout">
 <h2> {{userid.firstname}}{{userid.lastname}}</h2> 
 <img src="{{ url_for('static', filename="uploads/" + userid.filename) }}"> 
 <p>{{userid.email}}</p>
@@ -13,4 +13,6 @@
 <p>{{userid.biography}}</p> 
 
 <button type='submit'>Send Message</button> {{}} <button type='submit'>Follow</button>
-</div>
+</div> 
+
+{% endblock %}
