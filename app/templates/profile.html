@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+
+{% block main %} 
+
+<div class= ind_profilelayout>
+<h2> {{userid.firstname}}{{userid.lastname}}</h2> 
+<img src="{{ url_for('static', filename="uploads/" + userid.filename) }}"> 
+<p>{{userid.email}}</p>
+<p>{{userid.location}}</p>
+<p>{{userid.created_on}}</p> 
+
+<h4>About Me</h4> 
+<p>{{userid.biography}}</p> 
+
+<button type='submit'>Send Message</button> {{}} <button type='submit'>Follow</button>
+</div>

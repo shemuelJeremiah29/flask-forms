@@ -8,6 +8,7 @@ import os
 from app import app
 from flask import render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.utils import secure_filename
+from models import User 
 
 # Note: that when using Flask-WTF we need to import the Form Class that we created
 # in forms.py
@@ -24,50 +25,45 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/basic-form', methods=['GET', 'POST'])
-def basic_form():
-    if request.method == 'POST':
-        firstname = request.form['firstname']
-        lastname = request.form['lastname']
-        email = request.form['email']
-
-        return render_template('result.html',
-                               firstname=firstname,
-                               lastname=lastname,
-                               email=email)
-
-    return render_template('form.html')
-
-
 @app.route('/profile', methods=['GET', 'POST']) 
 def profileform():
     myform = MyProfileForm()
 
     if request.method == 'POST':
         if myform.validate_on_submit():
-            # Note the difference when retrieving form data using Flask-WTF
-            # Here we use myform.firstname.data instead of request.form['firstname']
+           
             firstname = myform.firstname.data
             lastname = myform.lastname.data
             email = myform.email.data
             location = myform.location.data 
             gender= myform.gender.data 
-            biography= myform.biography.data 
+            biography= myform.biography.data  
+            created_on=myform.created_on.data
             profilephoto= myform.photo.data 
-            
+            filename = secure_filename(profilephoto.filename)  
+            profilephoto.save(os.path.join(
+            app.config['UPLOAD_FOLDER'], filename
+            ))
             
             flash('You have successfully filled out the form', 'success')
-            return render_template('result.html', firstname=firstname, lastname=lastname, email=email)
+            return redirect(url_for("/profiles"))
 
         flash_errors(myform)
     return render_template('wtform.html', form=myform)
 
 
-@app.route('/profile', methods=['GET', 'POST']) 
 
-@app.route('/profiles', methods=['GET, POST'])
+@app.route('/profiles', methods=['GET, POST']) 
+def display_profilelist(): 
+     user=User.query.all     
+     return render_template("profiles.html",user=user) 
+     
+
+
 @app.route('/profiles/<userid>', methods=['GET', 'POST']) 
-
+def individ_profile(userid):    
+    userid=User.query.filter_by(id=userid).first() 
+    return render_template("profile.html",userid=userid)
 
 # @app.route('/photo-upload', methods=['GET', 'POST'])
 # def photo_upload():

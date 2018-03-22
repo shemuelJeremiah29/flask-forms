@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, TextAreaField, validators, RadioField, SubmitField 
 from wtforms.validators import DataRequired, Email
-
+import datetime 
 
 class MyProfileForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired()])
@@ -15,4 +15,5 @@ class MyProfileForm(FlaskForm):
         FileRequired(),
         FileAllowed(['jpg', 'png', 'Images only!'])
     ])  
+    created_on= datetime.datetime.now  
     submit=SubmitField(label='Submit')
