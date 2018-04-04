@@ -3,16 +3,11 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "1HJ3K609"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://proj:1234@localhost/proj"
+app.config['SECRET_KEY'] = "Sup3r$3cretkey"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://fabgcikbqoicpw:b8747586a30a12b2 96b53c1c164f97d06174960f03d360f27da9a1cb9ff80d51@ec2-54-235-146-51.compute-1.amazonaws.com:5432/dcvckb782jc0ct 
+"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True # added just to suppress a warning
-
-
-# Flask-Login login manager
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login' 
-
+app.config.from_object(__name__)
 db = SQLAlchemy(app)
 
 # Config Values
@@ -22,7 +17,6 @@ UPLOAD_FOLDER = './app/static/uploads'
 # in a session
 SECRET_KEY = 'Sup3r$3cretkey'
 
-app = Flask(__name__)
-app.config.from_object(__name__)
+
 
 from app import views
